@@ -114,8 +114,10 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
     return false;
   }
 
-  private float fontScale() {
-    return getReactApplicationContext().getResources().getConfiguration().fontScale;
+  @ReactMethod
+  public void getFontScale(Promise p) {
+    float fontScale = getReactApplicationContext().getResources().getConfiguration().fontScale;
+    p.resolve(fontScale);
   }
 
   private Boolean is24Hour() {
@@ -285,7 +287,6 @@ public class RNDeviceModule extends ReactContextBaseJavaModule {
     constants.put("timezone", TimeZone.getDefault().getID());
     constants.put("isEmulator", this.isEmulator());
     constants.put("isTablet", this.isTablet());
-    constants.put("fontScale", this.fontScale());
     constants.put("is24Hour", this.is24Hour());
     if (getCurrentActivity() != null &&
         (getCurrentActivity().checkCallingOrSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED ||
